@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "go-heyin/api/gen/go/common";
+
+// 业务错误码定义
+enum ErrorCode {
+  // 成功
+  SUCCESS = 0;
+
+  // 用户相关错误 (10001-10099)
+  USER_NOT_FOUND = 10001;
+  USER_ALREADY_EXISTS = 10002;
+  INVALID_PASSWORD = 10003;
+  USER_DISABLED = 10004;
+  USER_DELETED = 10005;
+
+  // 租户相关错误 (10100-10199)
+  TENANT_NOT_FOUND = 10101;
+  TENANT_ALREADY_EXISTS = 10102;
+  TENANT_DISABLED = 10103;
+  TENANT_PENDING = 10104;
+  TENANT_REJECTED = 10105;
+
+  // 权限相关错误 (10200-10299)
+  PERMISSION_DENIED = 10201;
+  ROLE_NOT_FOUND = 10202;
+  ROLE_DISABLED = 10203;
+  PERMISSION_NOT_FOUND = 10204;
+
+  // 认证相关错误 (10300-10399)
+  INVALID_CREDENTIALS = 10301;
+  TOKEN_EXPIRED = 10302;
+  TOKEN_INVALID = 10303;
+  TOKEN_REVOKED = 10304;
+  ACCOUNT_LOCKED = 10305;
+  AUTH_HEADER_MISSING = 10306;
+  AUTH_HEADER_INVALID = 10307;
+  AUTH_SERVICE_ERROR = 10308;
+  USER_TYPE_UNDEFINED = 10309;
+  ACCESS_FORBIDDEN = 10310;
+  TENANT_MISSING = 10311;
+  TENANT_INVALID = 10312;
+  REGISTER_FAILED = 10313;
+
+  // 参数验证错误 (10400-10499)
+  INVALID_PARAMETER = 10401;
+  MISSING_PARAMETER = 10402;
+  INVALID_FORMAT = 10403;
+  INVALID_EMAIL = 10404;
+  INVALID_PHONE = 10405;
+
+  // 数据相关错误 (10500-10599)
+  DATA_NOT_FOUND = 10501;
+  DATA_CONFLICT = 10502;
+  DATA_INVALID = 10503;
+  DATA_DUPLICATE = 10504;
+  DATA_CONSTRAINT = 10505;
+
+  // 系统相关错误 (19900-19999)
+  SYSTEM_ERROR = 19901;
+  SERVICE_UNAVAILABLE = 19902;
+  DATABASE_ERROR = 19903;
+  NETWORK_ERROR = 19904;
+}
+
+// 业务错误消息
+message BusinessError {
+  ErrorCode code = 1;           // 业务错误码
+  string message = 2;           // 错误消息
+  string type = 3;              // 错误类型
+  int32 http_code = 4;          // 对应的HTTP状态码
+  map<string, string> details = 5; // 错误详情
+}
+
+// 错误响应
+message ErrorResponse {
+  ErrorCode code = 1;
+  string message = 2;
+  string type = 3;
+  bool success = 4;
+  map<string, string> details = 5;
+}
