@@ -10,7 +10,6 @@ import (
 	"github.com/hashicorp/consul/api"
 )
 
-// 保持你的全局变量定义
 var (
 	flagConf   string
 	consulAddr string
@@ -34,7 +33,7 @@ func BootstrapConfig(serviceName string) config.Config {
 	if path == "" {
 		path = os.Getenv("CONSUL_PATH")
 		if path == "" {
-			path = "configs/" + serviceName
+			path = "configs/" + serviceName + "config.yaml"
 		}
 	}
 
